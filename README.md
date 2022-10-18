@@ -12,7 +12,7 @@ OrderDetail
 * ProductName: string
 * UnitPrice: decimal
 * Quantity: int
-* PriceTRY: string-readonly
+* TotalPriceTRY: string-readonly
 - TotalPrice(): decimal
 
 OrderState (Active = 0, Paid = 1, Canceled = 2)

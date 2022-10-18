@@ -9,17 +9,26 @@ namespace CafeBoston.DATA
     public class Order
     {
         public int TableNo { get; set; }
-        public OrderState State { get; set; }
+        public OrderState State { get; set; }=OrderState.Active; //Default değeri 0 ancak default active olarak belirttik.
         public decimal PaidAmount { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? StartTime { get; set; } = DateTime.Now;
+        public DateTime? EndTime { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
-        public readonly string TotalPriceTRY { get; set; }
+        public string TotalPriceTRY { get; } //=>TotalPrice().ToString("c2"); 2. tanımlama şekli
 
-        public decimal TotalPrice()
-        {
-            return
-        }
+        public decimal TotalPrice() => OrderDetails.Sum(x => x.TotalPrice());
+        //{
+        //(Uzun yol)
+        //decimal totalPrice = 0;
+        //foreach (var item in OrderDetails)
+        //{
+        //    totalPrice += item.TotalPrice();
+        //}
+        //return totalPrice;
+
+        //Kısa Yol
+        //return OrderDetails.Sum(x => x.TotalPrice());
+        //}
 
 
     }
