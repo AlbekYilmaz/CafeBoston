@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace CafeBostun.UI
 {
-    public partial class MainForm : Form
+    public partial class OrderHistoryForm : Form
     {
-        public MainForm()
+        public OrderHistoryForm()
         {
             InitializeComponent();
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
     }
 }
