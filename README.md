@@ -1,5 +1,5 @@
 Create a class library project named CafeBoston.
-DATA and create 5 classes and 1 enum as descirbed below.
+DATA and create 4 classes and 1 enum as descirbed below.
 
 
 
@@ -19,7 +19,7 @@ OrderState (Active = 0, Paid = 1, Canceled = 2)
 
 Order
 * TableNo: int
-* State: SiparisDurum
+* State: OrderState
 * PaidAmount: decimal
 * StartTime: DateTime?
 * EndTime: DateTime?
