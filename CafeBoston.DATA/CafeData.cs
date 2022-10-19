@@ -10,7 +10,7 @@ namespace CafeBoston.DATA
     {
         public int TableCount { get; set; } = 20;
         public List<Product> Products { get; set; } = new List<Product>();
-        public List<Order> ActiveOreders { get; set; } = new List<Order>();
-        public List<Order> PastOreders { get; set; } = new List<Order>();
+        public List<Order> ActiveOrders { get; set; } = new List<Order>();
+        public List<Order> PastOrders { get; set; } = new List<Order>();
     }
 }
