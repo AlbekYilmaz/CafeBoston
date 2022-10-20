@@ -95,6 +95,7 @@
             this.MainMenuStrip = this.msTop;
             this.Name = "MainForm";
             this.Text = "CafeBoston";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.msTop.ResumeLayout(false);
             this.msTop.PerformLayout();
             this.ResumeLayout(false);

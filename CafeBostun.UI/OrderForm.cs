@@ -11,8 +11,11 @@ using System.Windows.Forms;
 
 namespace CafeBostun.UI
 {
+    public delegate void TableMoveHandler(int oldTableNo, int newTableNo);
     public partial class OrderForm : Form
     {
+        public event TableMoveHandler TableMoving;
+
         private readonly CafeData _db;
         private readonly Order _order;
         private readonly BindingList<OrderDetail> _orderDetails;
@@ -38,6 +41,20 @@ namespace CafeBostun.UI
             Text = $"Order (Table {_order.TableNo})-{_order.StartTime?.ToLongTimeString()}";
             lblTableNo.Text = _order.TableNo.ToString("00");
             lblTotalPrice.Text = _order.TotalPriceTRY;
+            LoadEmptyTableNos();
+        }
+
+        private void LoadEmptyTableNos()
+        {
+            //cboTableNo.DataSource=Enumerable.Range(1,_db.TableCount).Where(x=>!_db.ActiveOrders.Any(y => y.TableNo == i).ToList(); (2.Yol)
+            cboTableNo.Items.Clear();
+            for (int i = 1; i <= _db.TableCount; i++)
+            {
+                if (!_db.ActiveOrders.Any(x => x.TableNo == i))
+                {
+                    cboTableNo.Items.Add(i);
+                }
+            }
         }
 
         private void LoadProducts()
@@ -84,14 +101,14 @@ namespace CafeBostun.UI
         private void CompleteOrder(string message, decimal paintAmount, OrderState newState)
         {
             DialogResult dr = MessageBox.Show(message, "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-            if(dr==DialogResult.Yes)
+            if (dr == DialogResult.Yes)
             {
-                _order.PaidAmount= paintAmount;
-                _order.State= newState;
-                _order.EndTime= DateTime.Now;
+                _order.PaidAmount = paintAmount;
+                _order.State = newState;
+                _order.EndTime = DateTime.Now;
                 _db.ActiveOrders.Remove(_order);
                 _db.PastOrders.Add(_order);
-                DialogResult=DialogResult.OK;
+                DialogResult = DialogResult.OK;
 
             }
         }
@@ -99,6 +116,21 @@ namespace CafeBostun.UI
         private void btnCancel_Click(object sender, EventArgs e)
         {
             CompleteOrder("Are you sure that you want to cancel the order?", 0, OrderState.Canceled);
+        }
+
+        private void btnMove_Click(object sender, EventArgs e)
+        {
+            if(cboTableNo.SelectedIndex==-1)return;
+
+            int target=(int)cboTableNo.SelectedIndex;
+            int oldTableNo=_order.TableNo;
+
+            _order.TableNo = target;
+            if (TableMoving != null)
+                TableMoving(oldTableNo, target);
+
+            UpdateTableInfo();
+            
         }
     }
 }
